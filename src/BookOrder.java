@@ -1,9 +1,11 @@
+import java.util.Scanner;
 
-public class BookOrder{
+public class BookOrder extends AVLTree{
 	
 	public static void main(String argsp[]) {
-		AVLTree avl = new AVLTree();
-		avl.addOrder();
+		AVLTree tree = new AVLTree();
+		Scanner scan = new Scanner(System.in);
+		int input = scan.nextInt();
 	}
 	
 }

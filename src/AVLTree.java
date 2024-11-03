@@ -1,31 +1,48 @@
 import java.lang.Math;
 
-public class AVLTree extends BookOrder{
-	
-	public class Node{
-		int key;
-		Node left;
-		Node right;
-		int height;
-		
-		public Node(int data) {
-			key = data;
+public class AVLTree{
+	public int key;
+	public AVLTree left;
+	public AVLTree right;
+	public int height;
+	public String title;
+
+	public AVLTree() {
+		  int key;
+		  AVLTree left;
+		  AVLTree right;
+		  int height;
+		  String title;
+
+		  
 		}
-	}
-	
-	public int height(Node x) {
+
+		public AVLTree(int key) {
+		    this.key = key;
+		  }
+
+	public int height(AVLTree x) {
 		return x != null ? x.height : -1;
 	}
 	
-	public void updateHeight(Node x) {
-		int leftChildHeight = height(x.left);
-		int rightChildHeight = height(x.right);
+	public void updateHeight(AVLTree x) {
+		int leftChildHeight;
+		int rightChildHeight;
+		if (x.left == null) {
+			leftChildHeight = 0;
+			
+		}
+		if(x.right == null) {
+			rightChildHeight = 0;
+		}
+		leftChildHeight = height(x.left);
+		rightChildHeight = height(x.right);
 		x.height = Math.max(leftChildHeight, rightChildHeight)+1;
 	}
 	
-	public Node rightRotation(Node x) {
-		Node leftChild = x.left;
-		Node nodeTemp = leftChild.right;
+	public AVLTree rightRotation(AVLTree x) {
+		AVLTree leftChild = x.left;
+		AVLTree nodeTemp = leftChild.right;
 		leftChild.right = x;
 		x.left = nodeTemp;
 		updateHeight(x);
@@ -33,9 +50,9 @@ public class AVLTree extends BookOrder{
 		return leftChild;
 	}
 	
-	public Node leftRotation(Node x) {
-		Node rightChild = x.right;
-		Node nodeTemp = rightChild.left;
+	public AVLTree leftRotation(AVLTree x) {
+		AVLTree rightChild = x.right;
+		AVLTree nodeTemp = rightChild.left;
 		rightChild.left = x;
 		x.right = nodeTemp;
 		updateHeight(x);
@@ -43,14 +60,14 @@ public class AVLTree extends BookOrder{
 		return rightChild;
 	}
 	
-	public int getBalance(Node x) {
+	public int getBalance(AVLTree x) {
 		if (x == null) {
 			return 0;
 		}
 		return height(x.left) - height(x.right);
 	}
 	
-	public Node rebalance(Node x) {
+	public AVLTree rebalance(AVLTree x) {
 		int balanceFactor = getBalance(x);
 		  if (balanceFactor < -1) {
 		    if (getBalance(x.left) <= 0) {    
@@ -73,13 +90,13 @@ public class AVLTree extends BookOrder{
 		  return x;
 	}
 	
-	public Node addOrder(Node x, int key) {
-		x = addOrder(x, key);
+	public AVLTree addOrder(AVLTree x, int key, String title) {
+		x = addOrder(x, key, title);
 		updateHeight(x);
 		return rebalance(x);
     }
 	
-	public Node removeOrder(Node x, int key) {
+	public AVLTree removeOrder(AVLTree x, int key) {
 		x = removeOrder(x, key);
 		if (x == null) {
 			return x;
@@ -88,19 +105,20 @@ public class AVLTree extends BookOrder{
 		return rebalance(x);
 	}
 	
-	public Node printTree(Node x) {
+	public void printTree(AVLTree x) {
 		if (x == null) {
-			return x;
+			return;
 		}
 		printTree(x.left);
+		printTree(x);
 	    printTree(x.right);
 	}
 	
-	public findOrder() {
-		
+	public int findOrder(int key) {
+		return key;
 	}
 	
-	public findOldest() {
+	public AVLTree findOldest() {
 		
 	}
 	
