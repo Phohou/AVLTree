@@ -171,6 +171,7 @@ public class AVLTree{
             System.out.print(x.title + ": ");
             System.out.println(x.key);
             printTree(x.right);
+            System.out.println("Tree height: " + root.height);
         }
     }
 	
@@ -187,9 +188,12 @@ public class AVLTree{
 	    // Traverse the tree
 	    if (key < node.key) {
 	        return findOrder(node.left, key); // Go left if the key is smaller
-	    } else if (key > node.key) {
+	    } 
+	    else if (key > node.key) {
 	        return findOrder(node.right, key); // Go right if the key is larger
-	    } else {
+	    } 
+	    else {
+            System.out.println("Tree height: " + root.height);
 	        return node.title; // Key found
 	    }
 	}

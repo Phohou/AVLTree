@@ -60,6 +60,7 @@ public class BookOrder extends AVLTree{
 			String title = tree.findOrder(input);
 			if (title != null) {
 				System.out.println("Order found : " + title);
+				System.out.println("Total nodes: " + nodes);
 			}
 			else {
 				System.out.println("Order not found");
@@ -87,6 +88,7 @@ public class BookOrder extends AVLTree{
 				else if (input == 5) {
 					System.out.println("In order from newest to oldest: ");
 					tree.findOldest();	
+					System.out.println("Total nodes: " + nodes);
 				}
 				else if(input == 6) {
 					running = false;
@@ -112,10 +114,12 @@ public class BookOrder extends AVLTree{
 				else if (input.equals("oldest")) {
 					System.out.println("In order from newest to oldest: ");
 					tree.findOldest();	
+					System.out.println("Total nodes: " + nodes);
 				}
 				else if (input.equals("latest")) {
 					System.out.println("In order from newest to oldest: ");
 					tree.findOldest();	
+					System.out.println("Total nodes: " + nodes);
 				}
 				else if(input.equals("exit")) {
 					running = false;
