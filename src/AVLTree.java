@@ -2,18 +2,20 @@ import java.lang.Math;
 
 public class AVLTree{
 	int nodes = 0;
-	private Node mostRecentNode = null;
+
 	/*node class that holds the nodes and avl tree*/
     class Node {
         int key;
         Node left, right;
         int height;
         String title;
+        public long time;
         
         //constructor method needed when creating a node//
         Node(int key, String title) {
             this.key = key;
             this.title = title;
+            this.time = System.currentTimeMillis();
         }
     }
 
@@ -103,8 +105,7 @@ public class AVLTree{
     public Node addOrder(Node node, int key, String title) {
         if (node == null) {		//if a node does exist create a new one with the given parameters
         	nodes++;
-            mostRecentNode = new Node(key, title);
-            return mostRecentNode;
+        	return new Node(key, title);
         }
         if (key < node.key) {
             node.left = addOrder(node.left, key, title);
@@ -196,14 +197,44 @@ public class AVLTree{
 	public void findOldest() {
 		findOldest(root);
 	}
-	public Node findOldest(Node x) {
-		return x;
+	public Node findOldest(Node root) {  
+		Node oldest = root;
+		if (oldest.left != null) {
+			Node leftOldest = findOldest(oldest.left);
+			if (leftOldest.time < oldest.time) {
+				oldest = leftOldest;
+			}
+		}
+		if (oldest.right != null) {
+			Node rightOldest = findOldest(oldest.right);
+			if (rightOldest.time < oldest.time) {
+				oldest = rightOldest;
+			}
+		}
+		System.out.println(oldest.title + ": " + oldest.key);
+		return oldest;
 	}
 	
 	public void findLatest() {
-		System.out.print(mostRecentNode.title + ": ");
-		System.out.print(mostRecentNode.key);
-		System.out.println("");
+		findLatest(root);
+	}
+	
+	public Node findLatest(Node root) {
+		Node latest = root;
+		if(latest.left != null) {
+			Node leftLatest = findLatest(latest.left);
+			if (leftLatest.time > latest.time) {
+				latest = leftLatest;
+		}
+	}
+		if (latest.right != null) {
+			Node rightLatest = findLatest(latest.right);
+			if (rightLatest.time > latest.time) {
+				latest = rightLatest;
+			}
+		}
+		System.out.println(latest.title + ": " + latest.key);
+		return latest;
 	}
 	
 	public int getNodes() {
