@@ -13,9 +13,8 @@ public class BookOrder extends AVLTree{
 		System.out.println("2: remove");
 		System.out.println("3: print");
 		System.out.println("4: find");
-		System.out.println("5: oldest");
-		System.out.println("6: latest");
-		System.out.println("7: exit");
+		System.out.println("5: oldest/latest");
+		System.out.println("6: exit");
 	}
 	
 	public static void add() {
@@ -86,12 +85,10 @@ public class BookOrder extends AVLTree{
 					search();
 					}
 				else if (input == 5) {
-					tree.findOldest();
+					System.out.println("In order from newest to oldest: ");
+					tree.findOldest();	
 				}
-				else if (input == 6) {
-					tree.findLatest();
-				}
-				else if(input == 7) {
+				else if(input == 6) {
 					running = false;
 				}
 				else {
@@ -113,10 +110,12 @@ public class BookOrder extends AVLTree{
 					search();
 				}
 				else if (input.equals("oldest")) {
-					tree.findOldest();
+					System.out.println("In order from newest to oldest: ");
+					tree.findOldest();	
 				}
 				else if (input.equals("latest")) {
-					tree.findLatest();
+					System.out.println("In order from newest to oldest: ");
+					tree.findOldest();	
 				}
 				else if(input.equals("exit")) {
 					running = false;
