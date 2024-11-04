@@ -1,7 +1,8 @@
 import java.lang.Math;
 
 public class AVLTree{
-	int nodes;
+	int nodes = 0;
+	private Node mostRecentNode = null;
 	/*node class that holds the nodes and avl tree*/
     class Node {
         int key;
@@ -100,8 +101,10 @@ public class AVLTree{
 	
 	/*method used for adding an order to the avl tree*/
     public Node addOrder(Node node, int key, String title) {
-        if (node == null) {
-            return new Node(key, title);
+        if (node == null) {		//if a node does exist create a new one with the given parameters
+        	nodes++;
+            mostRecentNode = new Node(key, title);
+            return mostRecentNode;
         }
         if (key < node.key) {
             node.left = addOrder(node.left, key, title);
@@ -110,8 +113,8 @@ public class AVLTree{
         } else {
             return node;
         }
-        nodes = nodes+1;
-        System.out.println(root.height);
+        updateHeight(node);
+        System.out.println("Tree height after addition: " + root.height);
         return node;
         }
 	
@@ -133,8 +136,10 @@ public class AVLTree{
         } else {
             // Node with only one child or no child
             if (node.left == null) {
+            	nodes--;
                 return node.right;
             } else if (node.right == null) {
+            	nodes--;
                 return node.left;
             }
             Node temp = getMinValueNode(node.right);	//If a node has two children, then get the left child to follow in-order traversal//
@@ -142,8 +147,7 @@ public class AVLTree{
             node.right = removeOrder(node.right, temp.key);
         }
         updateHeight(node);
-        nodes = nodes-1;
-        System.out.println(root.height);
+        System.out.println("Tree height after removal: " + (root != null ? root.height : 0));
         return rebalance(node);
     }
 
@@ -189,11 +193,20 @@ public class AVLTree{
 	    }
 	}
 	
+	public void findOldest() {
+		findOldest(root);
+	}
 	public Node findOldest(Node x) {
 		return x;
 	}
 	
-	public Node findLatest(Node x) {
-		return x;
+	public void findLatest() {
+		System.out.print(mostRecentNode.title + ": ");
+		System.out.print(mostRecentNode.key);
+		System.out.println("");
+	}
+	
+	public int getNodes() {
+		return nodes;
 	}
 }

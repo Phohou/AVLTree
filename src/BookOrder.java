@@ -4,6 +4,7 @@ public class BookOrder extends AVLTree{
 	static AVLTree tree = new AVLTree();
 	static boolean running = true;
 	static Scanner scan = new Scanner(System.in);
+	static int nodes;
 	
 	//function that prints out commands//
 	public static void start() {
@@ -12,7 +13,9 @@ public class BookOrder extends AVLTree{
 		System.out.println("2: remove");
 		System.out.println("3: print");
 		System.out.println("4: find");
-		System.out.println("5: exit");
+		System.out.println("5: oldest");
+		System.out.println("6: latest");
+		System.out.println("7: exit");
 	}
 	
 	public static void add() {
@@ -20,8 +23,12 @@ public class BookOrder extends AVLTree{
 		if (scan.hasNextInt()) {
 			int input = scan.nextInt();
 			System.out.println("Please input the book name");
-			String name = scan.next();
+			scan.nextLine();
+			String name = scan.nextLine();
 			tree.addOrder(input, name);
+			nodes = tree.getNodes();
+			System.out.println("Order sucessfully added!");
+			System.out.println("Total nodes: " + nodes);
 		}
 		else {
 			System.out.println("Please input a valid orderID");
@@ -33,6 +40,14 @@ public class BookOrder extends AVLTree{
 		if (scan.hasNextInt()) {
 			int input = scan.nextInt();
 			tree.removeOrder(input);
+			if (nodes == tree.getNodes()) {
+				System.out.println("Order not found");
+			}
+			else {
+				nodes = tree.getNodes();
+				System.out.println("Order sucessfully removed!");
+				System.out.println("Total nodes: " + nodes);
+			}
 		}
 		else {
 			System.out.println("Please input a valid orderID");
@@ -70,7 +85,13 @@ public class BookOrder extends AVLTree{
 				else if (input == 4) {
 					search();
 					}
-				else if(input == 5) {
+				else if (input == 5) {
+					tree.findOldest();
+				}
+				else if (input == 6) {
+					tree.findLatest();
+				}
+				else if(input == 7) {
 					running = false;
 				}
 				else {
@@ -90,6 +111,12 @@ public class BookOrder extends AVLTree{
 				}
 				else if(input.equals("find")) {
 					search();
+				}
+				else if (input.equals("oldest")) {
+					tree.findOldest();
+				}
+				else if (input.equals("latest")) {
+					tree.findLatest();
 				}
 				else if(input.equals("exit")) {
 					running = false;
