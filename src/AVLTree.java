@@ -1,38 +1,36 @@
 import java.lang.Math;
 
 public class AVLTree{
-	public int key;
-	public AVLTree left;
-	public AVLTree right;
-	public int height;
-	public String title;
+	int nodes;
+	/*node class that holds the nodes and avl tree*/
+    class Node {
+        int key;
+        Node left, right;
+        int height;
+        String title;
+        
+        //constructor method needed when creating a node//
+        Node(int key, String title) {
+            this.key = key;
+            this.title = title;
+        }
+    }
 
-	//class that sets up and holds the avl tree//
-	public AVLTree() {
-		  int key;
-		  AVLTree left;
-		  AVLTree right;
-		  int height;
-		  String title;
-		}
-	//constructor for when making a node with a key
-		public AVLTree(int key) {
-		    this.key = key;
-		  }
+    private Node root;
+    
 	/*method that finds the height of a node, returns -1 if the node is null and uses the built in .height command 
 	for existing nodes*/
-	public int height(AVLTree x) {
+	public int height(Node x) {
 		return x != null ? x.height : -1;
 	}
 	
 	/* method used for updating height of the avl tree, no return value since all it does is update existing
 	 values*/
-	public void updateHeight(AVLTree x) {
+	public void updateHeight(Node x) {
 		int leftChildHeight;
 		int rightChildHeight;
 		if (x.left == null) {
 			leftChildHeight = 0;
-			
 		}
 		if(x.right == null) {
 			rightChildHeight = 0;
@@ -44,9 +42,9 @@ public class AVLTree{
 	}
 	
 	/* method used for right rotations*/
-	public AVLTree rightRotation(AVLTree x) {
-		AVLTree leftChild = x.left;
-		AVLTree nodeTemp = leftChild.right;
+	public Node rightRotation(Node x) {
+		Node leftChild = x.left;
+		Node nodeTemp = leftChild.right;
 		leftChild.right = x;
 		x.left = nodeTemp;
 		updateHeight(x);
@@ -54,9 +52,9 @@ public class AVLTree{
 		return leftChild;
 	}
 	/*method used for left rotations*/
-	public AVLTree leftRotation(AVLTree x) {
-		AVLTree rightChild = x.right;
-		AVLTree nodeTemp = rightChild.left;
+	public Node leftRotation(Node x) {
+		Node rightChild = x.right;
+		Node nodeTemp = rightChild.left;
 		rightChild.left = x;
 		x.right = nodeTemp;
 		updateHeight(x);
@@ -64,7 +62,7 @@ public class AVLTree{
 		return rightChild;
 	}
 	/*method used to get the balance factor of a node*/
-	public int getBalance(AVLTree x) {
+	public int getBalance(Node x) {
 		if (x == null) {
 			return 0;
 		}
@@ -72,7 +70,7 @@ public class AVLTree{
 	}
 	
 	/*method used for balancing of the avl tree*/
-	public AVLTree rebalance(AVLTree x) {
+	public Node rebalance(Node x) {
 		int balanceFactor = getBalance(x);
 		  if (balanceFactor < -1) {  // >-1 balance factor calls for a rotation and tells us the tree is left heavy
 		    if (getBalance(x.left) <= 0) {    //if left side is balanced rotation right
@@ -95,41 +93,91 @@ public class AVLTree{
 		  return x;
 	}
 	
+	/*helper method*/
+	public void addOrder(int key, String title) {
+		root = addOrder(root, key, title);
+	}
+	
 	/*method used for adding an order to the avl tree*/
-	public AVLTree addOrder(AVLTree x, int key, String title) {
-		x = addOrder(x, key, title); //creates a new node with the parameters
-		updateHeight(x); //updates the height of the tree
-		return rebalance(x); //rebalances the tree with the new given node
+    public Node addOrder(Node node, int key, String title) {
+        if (node == null) {
+            return new Node(key, title);
+        }
+        if (key < node.key) {
+            node.left = addOrder(node.left, key, title);
+        } else if (key > node.key) {
+            node.right = addOrder(node.right, key, title);
+        } else {
+            return node;
+        }
+        nodes = nodes+1;
+        System.out.println(root.height);
+        return node;
+        }
+	
+    /*helper method*/
+    public void removeOrder(int key) {
+        root = removeOrder(root, key);
+    }
+    
+    /*method used for removing an order from the avl tree*/
+    private Node removeOrder(Node node, int key) {
+        if (node == null) {
+            return null;
+        }
+        // Standard BST delete operation
+        if (key < node.key) {
+            node.left = removeOrder(node.left, key);
+        } else if (key > node.key) {
+            node.right = removeOrder(node.right, key);
+        } else {
+            // Node with only one child or no child
+            if (node.left == null) {
+                return node.right;
+            } else if (node.right == null) {
+                return node.left;
+            }
+            Node temp = getMinValueNode(node.right);	//If a node has two children, then get the left child to follow in-order traversal//
+            node.key = temp.key;
+            node.right = removeOrder(node.right, temp.key);
+        }
+        updateHeight(node);
+        nodes = nodes-1;
+        System.out.println(root.height);
+        return rebalance(node);
+    }
+
+    /*helper method for removeOrder that gets the smaller value node*/
+    private Node getMinValueNode(Node node) {
+        Node current = node;
+        while (current.left != null) {
+            current = current.left;
+        }
+        return current;
+    }
+    public void printTree() {
+    	printTree(root);
+    }
+    
+	/*method that prints the tree using in-order traversal*/
+    public void printTree(Node x) {
+        if (x != null) {
+            printTree(x.left);
+            System.out.print(x.title + ": ");
+            System.out.println(x.key);
+            printTree(x.right);
+        }
     }
 	
-	/*method used for removing an order from the tree*/
-	public AVLTree removeOrder(AVLTree x, int key) {
-		x = removeOrder(x, key); //creates a node with the given
-		if (x == null) {  //if the node doesn't exist 
-			return x;
-		}
-		updateHeight(x);  //updates the height of the tree
-		return rebalance(x); //rebalances the tree
+	public String findOrder(int key) {
+		
 	}
 	
-	public void printTree(AVLTree x) {
-		if (x == null) {
-			return;
-		}
-		printTree(x.left);
-		printTree(x);
-	    printTree(x.right);
-	}
-	
-	public int findOrder(int key) {
-		return key;
-	}
-	
-	public AVLTree findOldest(AVLTree x) {
+	public Node findOldest(Node x) {
 		return x;
 	}
 	
-	public AVLTree findLatest(AVLTree x) {
+	public Node findLatest(Node x) {
 		return x;
 	}
 }

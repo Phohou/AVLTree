@@ -12,6 +12,38 @@ public class BookOrder extends AVLTree{
 		System.out.println("2: remove");
 		System.out.println("3: print");
 		System.out.println("4: find");
+		System.out.println("5: exit");
+	}
+	
+	public static void add() {
+		System.out.println("Please input the orderID");
+		if (scan.hasNextInt()) {
+			int input = scan.nextInt();
+			System.out.println("Please input the book name");
+			String name = scan.next();
+			tree.addOrder(input, name);
+		}
+		else {
+			System.out.println("Please input a valid orderID");
+		}
+	}
+	
+	public static void remove() {
+		System.out.println("Please input the orderID");
+		if (scan.hasNextInt()) {
+			int input = scan.nextInt();
+			tree.removeOrder(input);
+		}
+		else {
+			System.out.println("Please input a valid orderID");
+		}
+	}
+	
+	public static void search() {
+		System.out.println("Please input the orderID of the book you want to find");
+		if (scan.hasNextInt()) {
+			
+		}
 	}
 	
 	public static void main(String argsp[]) {
@@ -20,34 +52,41 @@ public class BookOrder extends AVLTree{
 			if (scan.hasNextInt()) {					//checks if user inputs an integer*/
 				int input = scan.nextInt();				//sets the int to a variable and checks if the int is valid
 				if (input == 1) {
-					System.out.println("add");
+					add();
 				}
-				if (input == 2) {
-					System.out.println("remove");
+				else if (input == 2) {
+					remove();
 				}
-				if (input == 3) {
+				else if (input == 3) {
 					System.out.println("print");
+					tree.printTree();
 				}
-				if (input == 4) {
+				else if (input == 4) {
 					System.out.println("find");
 					}
+				else if(input == 5) {
+					running = false;
+				}
 				else {
-					System.out.println("Please input a valid number 1-4 or command");  //figure out why this keeps running 
+					System.out.println("Please input a valid number 1-4 or command");
 				}
 				}
 			else if (scan.hasNextLine()) {				//same thing as before but with strings
 				String input = scan.nextLine();
 				if (input.equals("add")) {
-					System.out.println("add");
+					add();
 				}
-				if (input.equals("remove")) {
-					System.out.println("remove");
+				else if (input.equals("remove")) {
+					remove();
 				}
-				if(input.equals("print")) {
-					System.out.println("print");
+				else if(input.equals("print")) {
+					tree.printTree();
 				}
-				if(input.equals("find")) {
+				else if(input.equals("find")) {
 					System.out.println("find");
+				}
+				else if(input.equals("exit")) {
+					running = false;
 				}
 				else {
 					System.out.println("Please input a valid number 1-4 or command");
