@@ -42,7 +42,14 @@ public class BookOrder extends AVLTree{
 	public static void search() {
 		System.out.println("Please input the orderID of the book you want to find");
 		if (scan.hasNextInt()) {
-			
+			int input = scan.nextInt();
+			String title = tree.findOrder(input);
+			if (title != null) {
+				System.out.println("Order found : " + title);
+			}
+			else {
+				System.out.println("Order not found");
+			}
 		}
 	}
 	
@@ -58,11 +65,10 @@ public class BookOrder extends AVLTree{
 					remove();
 				}
 				else if (input == 3) {
-					System.out.println("print");
 					tree.printTree();
 				}
 				else if (input == 4) {
-					System.out.println("find");
+					search();
 					}
 				else if(input == 5) {
 					running = false;
@@ -83,7 +89,7 @@ public class BookOrder extends AVLTree{
 					tree.printTree();
 				}
 				else if(input.equals("find")) {
-					System.out.println("find");
+					search();
 				}
 				else if(input.equals("exit")) {
 					running = false;

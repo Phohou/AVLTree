@@ -169,8 +169,24 @@ public class AVLTree{
         }
     }
 	
-	public String findOrder(int key) {
-		
+    /*helper method*/
+    public String findOrder(int key) {
+    	String result = findOrder(root, key);
+    	return result;
+    }
+    
+	public String findOrder(Node node, int key) {
+	    if (node == null) {
+	        return null;
+	    }
+	    // Traverse the tree
+	    if (key < node.key) {
+	        return findOrder(node.left, key); // Go left if the key is smaller
+	    } else if (key > node.key) {
+	        return findOrder(node.right, key); // Go right if the key is larger
+	    } else {
+	        return node.title; // Key found
+	    }
 	}
 	
 	public Node findOldest(Node x) {
